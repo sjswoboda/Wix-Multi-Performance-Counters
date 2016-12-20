@@ -30,18 +30,13 @@ namespace MultiPerformanceCounterExtension
             var component = new Component
             {
                 KeyPath = YesNoType.yes,
-                Id = string.IsNullOrEmpty(ComponentId) ? CompilerCore.GetIdentifierFromName(categoryName) : ComponentId
+                Id = string.IsNullOrEmpty(ComponentId) ? CompilerCore.GetIdentifierFromName(categoryName) : ComponentId.Trim(),
+                Directory = string.IsNullOrEmpty(DirectoryId) ? "TARGETDIR" : DirectoryId.Trim()
             };
             component.AddChild(GetPerformanceCategory(categoryName));
 
-            var directory = new Directory
-            {
-                Id = string.IsNullOrEmpty(DirectoryId) ? "TARGETDIR" : DirectoryId
-            };
-            directory.AddChild(component);
-
             var fragment = new Fragment();
-            fragment.AddChild(directory);
+            fragment.AddChild(component);
 
             return new []{fragment};
         }
